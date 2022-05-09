@@ -14,17 +14,30 @@
 1. Run `./conf/config.sh`
 1. Run `./conf/build.sh`
 
-## Run AFLNet baseline experiments
+## Make preliminary test runs of the AFLNet baseline and SnapFuzz experiments
 
-To generate the baseline data we need to run each experiment seperately:
+Before we generate the real benchmark data, we can run some preliminary numbers just to make sure everything works properly. There are two main scripts:
 
-1. `./conf/run-orig.sh dicom`
-1. `./conf/run-orig.sh dns`
-1. `./conf/run-orig.sh dtls`
-1. `./conf/run-orig.sh ftp`
-1. `./conf/run-orig.sh rtsp`
+1. `./conf/run-orig.sh` that launches the native AFLNet experiments
+1. `./conf/run-snapfuzz.sh` that launchers the SnapFuze experiments
 
-After the above runs are done, you should be able to see new directores under the name schema of `results-orig-{project name}-{date}`.
+To make some tests runs of 10,000 iterations that last only but a short period of time, use the following commands:
+
+1. `./conf/run-orig.sh -s dicom`
+1. `./conf/run-orig.sh -s dns`
+1. `./conf/run-orig.sh -s dtls`
+1. `./conf/run-orig.sh -s ftp`
+1. `./conf/run-orig.sh -s rtsp`
+
+The same goes for the SnapFuzz experiments:
+
+1. `./conf/run-snapfuzz.sh -s dicom`
+1. `./conf/run-snapfuzz.sh -s dns`
+1. `./conf/run-snapfuzz.sh -s dtls`
+1. `./conf/run-snapfuzz.sh -s ftp`
+1. `./conf/run-snapfuzz.sh -s rtsp`
+
+After the above runs are done, you should be able to see new directores under the name schema of `results-orig-{project name}-{date}` for the native AFLNet experiments and `results-snapfuzz-{project name}-{date}` for the SnapFuzz experiments.
 
 You can `cd` in each of the directories and see the stats with:
 
@@ -34,9 +47,19 @@ An example output is provided in the following picture. The only important infor
 
 ![Example output of stats.py](./imgs/orig-out.png)
 
+## Run AFLNet baseline experiments
+
+Now we are ready to generate the paper data. The baseline data include 1 milion iterations and we need to run each experiment seperately:
+
+1. `./conf/run-orig.sh dicom`
+1. `./conf/run-orig.sh dns`
+1. `./conf/run-orig.sh dtls`
+1. `./conf/run-orig.sh ftp`
+1. `./conf/run-orig.sh rtsp`
+
 ## Run 1 milion iterations SnapFuzz experiments
 
-To generate the SnapFuzz data we follow a similar strategy as above:
+The same goes for the SnapFuzz data. We follow a similar strategy as above:
 
 1. `./conf/run-snapfuzz.sh dicom`
 1. `./conf/run-snapfuzz.sh dns`

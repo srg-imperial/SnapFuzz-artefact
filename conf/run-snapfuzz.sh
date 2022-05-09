@@ -6,7 +6,7 @@ trap 'exit 130' INT
 DEBUG=0
 LONG_RUN=0
 
-while getopts "dl" opt; do
+while getopts "dls" opt; do
   case $opt in
   d)
     echo "Debug mode ON"
@@ -15,6 +15,10 @@ while getopts "dl" opt; do
   l)
     echo "24h long run ON"
     LONG_RUN=1
+    ;;
+  s)
+    echo "10k iterations run ON"
+    SHORT_RUN=1
     ;;
   *)
     echo "Uknown flag!"
@@ -27,6 +31,9 @@ shift $((OPTIND - 1))
 if [ "${LONG_RUN}" == 1 ]; then
   AFL_BINS=("./afl-fuzz-noaffin-long")
   AFL_WRAPPER="timeout --preserve-status --signal=SIGINT --kill-after=10 24h"
+elif [ "${SHORT_RUN}" == 1 ]; then
+  AFL_BINS=("./afl-fuzz-noaffin-short")
+  AFL_WRAPPER=""
 else
   AFL_BINS=("./afl-fuzz-noaffin")
   # AFL_BINS=("./afl-fuzz-noaffin" "./afl-fuzz-noaffin-print")
