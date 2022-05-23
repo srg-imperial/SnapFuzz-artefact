@@ -3,9 +3,9 @@
 """Get stats from AFL runs.
 """
 
-import csv
 import decimal
 import glob
+import statistics
 import sys
 
 from collections import defaultdict, namedtuple
@@ -56,7 +56,6 @@ def finish_mma(mma):
 def remove_rel_path(path: str) -> str:
     if path.startswith("./"):
         return path[2:]
-    return path
 
 
 def get_target_name(line):
@@ -281,16 +280,16 @@ def gather_perf_mode():
     expected_execs_done = 0
     for fname in glob.glob(FUZZER_STAT_FILES_GLOB):
         with open(fname) as f:
-            start_time: datetime
-            last_update: datetime
-            run_time: datetime
+            start_time: datetime = None
+            last_update: datetime = None
+            run_time: datetime = None
             nominal_execs_per_sec = 0.0
             stability = ""
             label = ""
             unique_crashes = ""
             unique_hangs = ""
-            execs_done = 0
-            cycles_done = 0
+            execs_done = ""
+            cycles_done = ""
 
             paths_total = ""
             max_depth = ""
@@ -370,11 +369,15 @@ def gather_perf_mode():
     if results:
         print("++++++++++++++++++++++++++ Perf Mode +++++++++++++++++++++++++")
         print("\n".join(results))
-        avg_total_seconds = sum(avg_total_time) / len(avg_total_time)
+        mean = statistics.mean(avg_total_time)
+        stdev = statistics.stdev(avg_total_time)
         print(
-            f"Avg total time: {str(timedelta(seconds=avg_total_seconds)).split('.')[0]} ({avg_total_seconds//60:.0f} min)"
+            f"Mean total time: {str(timedelta(seconds=mean)).split('.')[0]} ({mean//60:.0f} min)"
         )
-        print(f"Iterations per second: {execs_done/avg_total_seconds:.2f}")
+        print(
+            f"Stdev total time: {str(timedelta(seconds=stdev)).split('.')[0]} ({stdev//60:.0f} min)"
+        )
+        print(f"Iterations per second: {execs_done/mean:.2f}")
 
     # csv_file.close()
 
