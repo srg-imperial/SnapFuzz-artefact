@@ -5,6 +5,7 @@ trap 'exit 130' INT
 
 DEBUG=0
 LONG_RUN=0
+SHORT_RUN=0
 
 while getopts "dls" opt; do
   case $opt in
