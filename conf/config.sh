@@ -8,6 +8,12 @@ if [ ! -x "./conf/config.sh" ]; then
   exit 1
 fi
 
+echo "Configuring AFL. This requires sudo access!"
+
+echo core | sudo tee /proc/sys/kernel/core_pattern >/dev/null || true
+sudo sysctl -w kernel.core_pattern="core" || true
+echo performance | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor || true
+
 echo "Configuring FTP benchmark"
 
 mkdir -p ./ftpshare
