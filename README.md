@@ -19,7 +19,7 @@ Before we generate the real benchmark data, we can run some preliminary numbers 
 1. `./conf/run-orig.sh` that launches the native AFLNet experiments
 1. `./conf/run-snapfuzz.sh` that launchers the SnapFuze experiments
 
-To make some tests runs of 10,000 iterations that last only but a short period of time, use the following commands:
+To make some tests runs of 1,000 iterations that last only but a short period of time, use the following commands:
 
 1. `./conf/run-orig.sh -s dicom`
 1. `./conf/run-orig.sh -s dns`

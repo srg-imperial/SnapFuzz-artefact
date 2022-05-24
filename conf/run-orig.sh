@@ -18,7 +18,7 @@ while getopts "dls" opt; do
     LONG_RUN=1
     ;;
   s)
-    echo "10k iterations run ON"
+    echo "1k iterations run ON"
     SHORT_RUN=1
     ;;
   *)
