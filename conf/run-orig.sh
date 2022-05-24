@@ -119,10 +119,15 @@ echo "++++++++++++++++++++++++++++ STATS ++++++++++++++++++++++++++++"
 echo "PWD: $(pwd)"
 echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
 
+MAX_TRY=9
+if [ "${SHORT_RUN}" == 1 ]; then
+  MAX_TRY=2
+fi
+
 IT=1
 for AFL_BIN in "${AFL_BINS[@]}"; do
   for TARGET_BIN in "${TARGET_BINS[@]}"; do
-    for TRY in {0..19}; do
+    for ((TRY=0; TRY <= MAX_TRY; TRY++)); do
       ALF_RESULT_DIR="aflout-${PROJECT_NAME}-${IT}.${TRY}"
       OUTPUT_FILE="output-${PROJECT_NAME}-${IT}.${TRY}.txt"
 
