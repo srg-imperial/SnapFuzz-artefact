@@ -212,4 +212,4 @@ cp "dtls-server" "${FINISH_DIR}/dtls-server-asan"
 
 # # cp ".libs/libpthread.so.20.0.28" "${FINISH_DIR}/lib2pthread.so"
 
-echo "Build done!"
+echo "Done!"
