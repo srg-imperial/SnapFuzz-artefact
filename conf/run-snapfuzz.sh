@@ -186,3 +186,16 @@ TIMENOW=$(date +%Y-%m-%d-%H-%M)
 RESULTS_DIR="results-snapfuzz-${PROJECT_NAME}-${TIMENOW}"
 mkdir "${RESULTS_DIR}"
 mv aflout-${PROJECT_NAME}-* output-${PROJECT_NAME}-* "${RESULTS_DIR}"
+
+# Check for errors
+OUTPUT_FILES=$(ls -1q "${RESULTS_DIR}/output-${PROJECT_NAME}-"* | wc -l)
+CHECK_1=$(grep "We're done here. Have a nice day!" "${RESULTS_DIR}/output-${PROJECT_NAME}-"* | wc -l)
+CHECK_2=$(grep "All set and ready to roll!" "${RESULTS_DIR}/output-${PROJECT_NAME}-"* | wc -l)
+
+if [ "${OUTPUT_FILES}" != "${CHECK_1}" ] || [ "${OUTPUT_FILES}" != "${CHECK_2}" ]; then
+  echo "There was a problem in the run. Please check the ${RESULTS_DIR}/output-${PROJECT_NAME} files for more!"
+  exit 1
+fi
+
+echo "Results in: ${RESULTS_DIR}"
+echo "Done!"
